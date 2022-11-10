@@ -10,7 +10,17 @@ impl Sheet {
         let content: String = read_content(path);
         let lines: Vec<MapLine> = Vec::new();
 
-        let string_lines = parse_string_lines(&content);
+        let string_lines = 
+            parse_string_lines(&content)
+            // Filter Into map declarations
+            .into_iter()
+            .filter(|s| !s.is_empty())
+            .filter(|s| get_first_word(s).ends_with("map"))
+            .collect::<Vec<_>>();
+
+        for s in &string_lines {
+            println!("Line: {}", s);
+        }
 
         Sheet { 
             content,
@@ -29,8 +39,6 @@ fn main() {
     let input = query_path();
 
     let sheet = Sheet::new(input);
-
-    println!("{}", &sheet.content);
 }
 
 fn query_path() -> String {
@@ -47,4 +55,10 @@ fn parse_string_lines(content: &String) -> Vec<String> {
 
 fn read_content(path: String) -> String {
     fs::read_to_string(path).expect("Should have been able to read the file, but couldn't") 
+}
+
+fn get_first_word(base: &String) -> String {
+    let split = base.split_whitespace().map(|s| s.to_string()).collect::<Vec<String>>();
+
+    split.get(0).expect("String empty").clone()
 }
