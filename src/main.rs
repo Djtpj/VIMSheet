@@ -1,5 +1,9 @@
 use std::{fs, io};
 
+mod mapline;
+
+use mapline::MapLine;
+
 struct Sheet {
     content: String,
     lines: Vec<MapLine>
@@ -18,7 +22,7 @@ impl Sheet {
             .filter(|s| get_first_word(s).ends_with("map"))
             .collect::<Vec<_>>();
 
-        for s in &string_lines {
+        for s in string_lines.clone() {
             println!("Line: {}", s);
         }
 
@@ -29,11 +33,7 @@ impl Sheet {
     }
 }
 
-struct MapLine {
-    mode: String,
-    trigger: String,
-    description: String,
-}
+
 
 fn main() {
     let input = query_path();
