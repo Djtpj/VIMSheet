@@ -1,7 +1,7 @@
 # vimsheet
 I'm learning Rust and Neovim right now, and I haven't been able to find a good vim cheat sheet generator... So I decided to make one of my own! VimSheet exports to a CSV file so you can do whatever you desire with the cheetsheet. Not right now though, it's still in development
 
-# Using VIMSheet
+# Setting up for VIMSheet
 All Neovim `init.vim` files should be compatible with VIMSheet.
 
 To add a description to a map all you have to do is simply add a comment at the end of the line using a `"` and then whatever your description is!
