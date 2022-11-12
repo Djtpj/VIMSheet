@@ -17,6 +17,7 @@ impl Sheet {
 
                 is_mappable(s)
             })
+            // Don't include excluded lines
             .filter(|s| !s.contains("!exclude"))
             .collect::<Vec<String>>();
 
@@ -27,6 +28,7 @@ impl Sheet {
         }
     }
 
+    // Serialize into csv
     pub fn serialize(self) -> String {
         let mut serialized: Vec<[String; 3]> = Vec::new();
 
@@ -42,9 +44,11 @@ impl Sheet {
         for line in serialized {
             for info in line {
                 result.push_str(&info.as_str());
+                // Column separator
                 result.push(',');
             }
 
+            // Row separator
             result.push('\n');
         }
 
@@ -81,6 +85,7 @@ pub fn map_lines(lines: Vec<String>) -> Vec<MapLine> {
     let mut map_lines: Vec<MapLine> = Vec::new();
 
     for line in lines {
+        // Never map empty lines
         if line.is_empty() { continue; }
 
         map_lines.push(MapLine::new(line));

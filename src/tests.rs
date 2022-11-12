@@ -71,6 +71,8 @@ fn test_is_mappable() {
 
 #[test]
 fn test_mode_identification() {
+    // Test all of the different modes
+
     let insert = "inoremap";
     matches!(identify_mode(&String::from(insert)), Mode::INSERT);
 

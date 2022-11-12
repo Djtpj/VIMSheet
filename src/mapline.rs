@@ -7,7 +7,6 @@ pub struct MapLine {
 
 impl MapLine {
     pub fn new(unfiltered: String) -> Self {
-
         let line = filter_attrs(&unfiltered);
         
         MapLine {
@@ -23,10 +22,6 @@ impl MapLine {
         let description = &self.description;
 
         return [description.clone(), trigger.clone(), mode.clone()];
-    }
-
-    pub fn get_info(&self) -> (Mode, String, String) {
-        (self.mode.clone(), self.trigger.clone(), self.description.clone())
     }
 }
 
@@ -97,9 +92,12 @@ pub fn identify_trigger(line: &String) -> String {
 pub fn get_desc(line: &String) -> String {
     let split = line.split("\"").map(|s| s.to_string()).collect::<Vec<String>>();
 
+    // Get inline comment
     let desc = split.get(split.len() - 1).unwrap().clone().trim().to_string();
 
-    if split.len() <= 1 || desc.trim().is_empty() { return String::from("No Description.") }
+    if split.len() <= 1 || // If there isn't a inline comment
+        desc.trim().is_empty() // Or if the line is empty
+        { return String::from("No Description.") }
 
     return desc;
 }
