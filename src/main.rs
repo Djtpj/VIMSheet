@@ -23,6 +23,7 @@ impl Sheet {
 
                 is_mappable(s)
             })
+            .filter(|s| !s.contains("!exclude"))
             .collect::<Vec<String>>();
 
         let lines: Vec<MapLine> = map_lines(string_lines);
